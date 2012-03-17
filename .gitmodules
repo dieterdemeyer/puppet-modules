@@ -1,3 +1,6 @@
 [submodule "puppet-limits"]
 	path = puppet-limits
 	url = git@github.com:cegeka/puppet-limits.git
+[submodule "puppet-oracleprereq"]
+	path = puppet-oracleprereq
+	url = git@github.com:cegeka/puppet-oracleprereq.git

@@ -4,3 +4,6 @@
 [submodule "puppet-oracleprereq"]
 	path = puppet-oracleprereq
 	url = git@github.com:cegeka/puppet-oracleprereq.git
+[submodule "puppet-yumrepo"]
+	path = puppet-yumrepo
+	url = git@github.com:cegeka/puppet-yumrepo.git

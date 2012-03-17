@@ -7,3 +7,6 @@
 [submodule "puppet-yumrepo"]
 	path = puppet-yumrepo
 	url = git@github.com:cegeka/puppet-yumrepo.git
+[submodule "puppet-users"]
+	path = puppet-users
+	url = git@github.com:cegeka/puppet-users.git

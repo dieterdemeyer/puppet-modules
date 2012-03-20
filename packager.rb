@@ -1,5 +1,6 @@
 require 'fpm'
 require 'fpm/program'
+require 'pp'
 
 class Packager
 
@@ -50,9 +51,9 @@ class Packager
     Dir.chdir tmpdir
     FileUtils.mkpath destination_folder
     FileUtils.mkpath temp_src_dir
-    FileUtils.mkpath "#{temp_src_dir}/#{module_name}"
-    open("#{temp_src_dir}/#{module_name}/CHANGELOG", "w") { |file|
-      file.write(module_dependencies)
+    FileUtils.mkpath "#{temp_src_dir}/#{package_name}"
+    open("#{temp_src_dir}/#{package_name}/dependencies", "w") { |file|
+      PP::pp(module_dependencies, file)
     }
     packagebuild = FPM::Program.new
     ret = packagebuild.run(arguments)

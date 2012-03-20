@@ -1,15 +1,15 @@
-# Cegeka Puppet Modules
+= Cegeka Puppet Modules
 
 
-### About
+=== About
 
 This repository contains all the Cegeka Puppet Modules as git submodules.
 
-### Getting Started
+=== Getting Started
 
 
 
-### Getting Help
+=== Getting Help
 
 
 

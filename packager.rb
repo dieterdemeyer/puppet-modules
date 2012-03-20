@@ -30,23 +30,14 @@ class Packager
   def build(module_name, module_dependencies)
     version = "0.01"
     package_name = "cegeka-#{module_name}"
-    #case package_type
-    #when "rpm"
-    #  delimitera = "-"
-    #  delimiterb = "."
-    #  architecture = "noarch"
-    #when "deb"
-    #  delimitera = "_"
-    #  delimiterb = "_"
-    #  architecture = "all"
-    #end
     destination_file = "#{package_name}#{@delimiter_a}#{version}-#{@build_number}#{@delimiter_b}#{@architecture}.#{@package_type}"
     destination_folder = "#{@basedirectory}/#{module_name}/target/dist"
+    temp_src_dir = "#{@basedirectory}/#{module_name}/target/src"
     url = "https://github.com/cegeka/#{module_name}"
     description = "Puppet module: #{module_name} by Cegeka\nModule #{module_name} description goes here."
 
-    static_arguments = ["-t", @package_type, "-s", "dir", "-x", ".git", "-a", @architecture, "-m", "Cegeka <computing@cegeka.be>"]
-    var_arguments = ["-n", package_name, "-v", version, "--iteration", @build_number, "--url", url, "--description", description, "-C", @basedirectory, module_name]
+    static_arguments = ["-t", @package_type, "-s", "dir", "-x", ".git", "-a", @architecture, "-m", "Cegeka <computing@cegeka.be>", "--prefix", "/usr/share/doc"]
+    var_arguments = ["-n", package_name, "-v", version, "--iteration", @build_number, "--url", url, "--description", description, "-C", temp_src_dir]
     dependency_arguments = []
     module_dependencies.each { |dependent_module,dependent_version|
       dependency_arguments << "-d"
@@ -54,10 +45,15 @@ class Packager
     }
 
     arguments = static_arguments + dependency_arguments + var_arguments
-
+    
     tmpdir = Dir.mktmpdir
     Dir.chdir tmpdir
     FileUtils.mkpath destination_folder
+    FileUtils.mkpath temp_src_dir
+    FileUtils.mkpath "#{temp_src_dir}/#{module_name}"
+    open("#{temp_src_dir}/#{module_name}/CHANGELOG", "w") { |file|
+      file.write(module_dependencies)
+    }
     packagebuild = FPM::Program.new
     ret = packagebuild.run(arguments)
     FileUtils.mv("#{tmpdir}/#{destination_file}","#{destination_folder}/#{destination_file}")

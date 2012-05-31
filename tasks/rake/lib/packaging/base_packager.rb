@@ -4,7 +4,7 @@ require 'fpm/program'
 require 'pp'
 
 $:.unshift(File.join(File.dirname(__FILE__), '..'))
-require 'modulefile_reader'
+require 'version_helper'
 
 class BasePackager
 
@@ -12,8 +12,7 @@ class BasePackager
     self.validate_environment
     
     @basedirectory = ENV['WORKSPACE']
-		@package_version = ModulefileReader.new.version
-		@semver_version = @package_version + "+build." + ENV['BUILD_NUMBER'] + "." + ENV['GIT_COMMIT'][0,10]
+		@semver_version = VersionHelper.new.semver_version
     @release = "1"
     @package_type = package_type 
     

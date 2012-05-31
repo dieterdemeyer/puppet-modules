@@ -3,13 +3,6 @@
 
 === About
 
-This repository contains all the Cegeka Puppet Modules as git submodules.
-
-=== Getting Started
-
-
-
-=== Getting Help
-
+This module is a container for all the Cegeka Puppet modules.
 
 

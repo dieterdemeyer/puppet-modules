@@ -29,6 +29,11 @@ class JenkinsHelper
     @jenkins_conn = Net::HTTP.new(@jenkins_uri.host, @jenkins_uri.port)
     @jenkins_conn.use_ssl = true
     @jenkins_conn.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+		puts "kom ik hier ????"
+		puts @jenkins_url
+		puts @jenkins_username
+		puts @jenkins_token
   end
 
   def find_upstream_projects(job_name)

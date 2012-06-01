@@ -8,13 +8,16 @@ require 'version_helper'
 
 class BasePackager
 
+  attr_writer :package_prefix
+
   def initialize(package_type)
     self.validate_environment
     
     @basedirectory = ENV['WORKSPACE']
-		@semver_version = VersionHelper.new.semver_version
+    @semver_version = VersionHelper.new.semver_version
     @release = "1"
     @package_type = package_type 
+    @package_prefix = package_prefix
     
     case package_type
     when "rpm"
@@ -22,6 +25,10 @@ class BasePackager
     when "deb"
       @first_delimiter, @second_delimiter, @architecture = "_", "_", "all"
     end
+  end
+
+  def package_prefix
+    @package_prefix || "cegeka"
   end
 
   def validate_environment()
@@ -37,7 +44,7 @@ class BasePackager
   end
  
   def build(module_name, module_dependencies)
-    package_name = "cegeka-#{module_name}"
+    package_name = "#{@package_prefix}-#{module_name}"
     destination_file = "#{package_name}#{@first_delimiter}#{@semver_version}-#{@release}#{@second_delimiter}#{@architecture}.#{@package_type}"
     destination_folder = "#{@basedirectory}/#{module_name}/#{RESULTS}/dist"
 		temp_src_dir = "#{@basedirectory}/#{module_name}/#{RESULTS}/src"
@@ -49,8 +56,9 @@ class BasePackager
     var_arguments = ["-n", package_name, "-v", @semver_version, "--iteration", @release, "--url", url, "--description", description, "-C", @basedirectory, module_name]
 		dependency_arguments = []
     module_dependencies.each { |dependent_module,dependent_version|
+      dependent_package = "#{@package_prefix}-#{dependent_module}"
       dependency_arguments << "-d"
-      dependency_arguments << "#{dependent_module} <= #{dependent_version}"
+      dependency_arguments << "#{dependent_package} <= #{dependent_version}"
     }
 		
     arguments = static_arguments + exclude_arguments + var_arguments + dependency_arguments

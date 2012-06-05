@@ -9,7 +9,6 @@ namespace "jenkins" do
     dist_dir = "#{RESULTS}/dist"
 
     module_name = ENV['JOB_NAME']
-    git_commit = ENV['GIT_COMMIT']
 		semver_version = VersionHelper.new.semver_version
     
     puts "Saving #{module_name}.yaml file"

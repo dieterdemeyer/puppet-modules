@@ -2,9 +2,12 @@ require File.expand_path('../../../env', __FILE__)
 
 class VersionHelper
 
+  attr_reader :release
+
 	def initialize()
 		filename = File.join(MODULE_ROOT_DIR, 'Modulefile')
 		@module_file = File.read(filename)
+    @release = "1"
 	end
 
 	def semver_version
@@ -12,7 +15,7 @@ class VersionHelper
     	ENV['GIT_COMMIT'] = "54b0c58c7ce9f2a8b551351102ee0938"[0,10]
     end
 
-		return package_version + "+build." + ENV['BUILD_NUMBER'] + "." + ENV['GIT_COMMIT'][0,10] + "-1"
+		return package_version + "+build." + ENV['BUILD_NUMBER'] + "." + ENV['GIT_COMMIT'][0,10]
 	end
 
 	private	

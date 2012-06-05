@@ -14,8 +14,9 @@ class BasePackager
     self.validate_environment
     
     @basedirectory = ENV['WORKSPACE']
-    @semver_version = VersionHelper.new.semver_version
-    @release = "1"
+    versionhelper = VersionHelper.new
+    @semver_version = versionhelper.semver_version
+    @release = versionhelper.release
     @package_type = package_type 
     @package_prefix = package_prefix
     

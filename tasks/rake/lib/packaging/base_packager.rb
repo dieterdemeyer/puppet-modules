@@ -48,7 +48,7 @@ class BasePackager
     package_name = "#{@package_prefix}-puppet-#{module_name}"
     destination_file = "#{package_name}#{@first_delimiter}#{@semver_version}-#{@release}#{@second_delimiter}#{@architecture}.#{@package_type}"
     destination_folder = "#{@basedirectory}/#{module_name}/#{RESULTS}/dist"
-		temp_src_dir = "#{@basedirectory}/#{module_name}/#{RESULTS}/src"
+    temp_src_dir = "#{@basedirectory}/#{module_name}/#{RESULTS}/src"
     url = "https://github.com/cegeka/puppet-#{module_name}"
     description = "Puppet module: #{module_name} by Cegeka\nModule #{module_name} description goes here."
 
@@ -67,9 +67,9 @@ class BasePackager
     tmpdir = Dir.mktmpdir
     Dir.chdir tmpdir
     FileUtils.mkpath destination_folder
-		FileUtils.mkpath temp_src_dir
-		FileUtils.mkpath "#{temp_src_dir}/#{package_name}"
-		open("#{temp_src_dir}/#{package_name}/dependencies", "w") { |file|
+    FileUtils.mkpath temp_src_dir
+    FileUtils.mkpath "#{temp_src_dir}/#{package_name}"
+    open("#{temp_src_dir}/#{package_name}/dependencies", "w") { |file|
       PP::pp(module_dependencies, file)
     }
     packagebuild = FPM::Program.new

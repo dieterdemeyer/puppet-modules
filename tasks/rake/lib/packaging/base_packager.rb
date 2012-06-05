@@ -45,17 +45,17 @@ class BasePackager
   end
  
   def build(module_name, module_dependencies)
-    package_name = "#{@package_prefix}-#{module_name}"
+    package_name = "#{@package_prefix}-puppet-#{module_name}"
     destination_file = "#{package_name}#{@first_delimiter}#{@semver_version}-#{@release}#{@second_delimiter}#{@architecture}.#{@package_type}"
     destination_folder = "#{@basedirectory}/#{module_name}/#{RESULTS}/dist"
 		temp_src_dir = "#{@basedirectory}/#{module_name}/#{RESULTS}/src"
-    url = "https://github.com/cegeka/#{module_name}"
+    url = "https://github.com/cegeka/puppet-#{module_name}"
     description = "Puppet module: #{module_name} by Cegeka\nModule #{module_name} description goes here."
 
     static_arguments = ["-t", @package_type, "-s", "dir", "-a", @architecture, "-m", "Cegeka <computing@cegeka.be>", "--prefix", "/usr/share/doc"]
-		exclude_arguments = ["-x", ".git", "-x", ".gitignore", "-x", "tasks", "-x", "Rakefile", "-x", "target", "-x", ".project", "-x", ".puppet-lintrc"]
+    exclude_arguments = ["-x", ".git", "-x", ".gitignore", "-x", "tasks", "-x", "Rakefile", "-x", "target", "-x", ".project", "-x", ".puppet-lintrc"]
     var_arguments = ["-n", package_name, "-v", @semver_version, "--iteration", @release, "--url", url, "--description", description, "-C", @basedirectory, module_name]
-		dependency_arguments = []
+    dependency_arguments = []
     module_dependencies.each { |dependent_module,dependent_version|
       dependent_package = "#{@package_prefix}-#{dependent_module}"
       dependency_arguments << "-d"

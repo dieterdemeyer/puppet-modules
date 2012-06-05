@@ -9,13 +9,15 @@ namespace "jenkins" do
     dist_dir = "#{RESULTS}/dist"
 
     module_name = ENV['JOB_NAME']
-		semver_version = VersionHelper.new.semver_version
+    
+    version_helper = VersionHelper.new
+    version = version_helper.semver_version + version_helper.release
     
     puts "Saving #{module_name}.yaml file"
     FileUtils.mkdir_p(dist_dir)
     open("#{dist_dir}/#{module_name}.yaml", "w") { |file|
       file.puts "module_name: #{module_name}"
-      file.puts "semver_version: #{semver_version}"
+      file.puts "version: #{version}"
     }
   end
 end

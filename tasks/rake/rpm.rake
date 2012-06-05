@@ -14,10 +14,12 @@ task :rpm do
     fail("Environment variable JOB_NAME has not been set.")
   end
 
-  module_name = ENV["JOB_NAME"].split('-')[1]
+  job_name = ENV["JOB_NAME"]
 
   jenkins_helper = JenkinsHelper.new
-  module_dependencies = jenkins_helper.find_module_dependencies(module_name)
+  module_dependencies = jenkins_helper.find_module_dependencies(job_name)
+
+  module_name = ENV["JOB_NAME"].split('-')[1]
 
   rpm_packager = RpmPackager.new
   output = rpm_packager.build(module_name, module_dependencies)

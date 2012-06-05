@@ -13,4 +13,3 @@ MODULE_ROOT_DIR = Rake.original_dir
 
 # Basedir for all output.
 RESULTS = ENV['results'] || 'target'
-

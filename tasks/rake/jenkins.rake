@@ -17,11 +17,11 @@ namespace "jenkins" do
     FileUtils.mkdir_p(dist_dir)
     open("#{dist_dir}/#{module_name}.yaml", "w") { |file|
       file.puts "module_name: #{module_name}"
-      file.puts "rpm_version: #{rpm_version}"
+      file.puts "puppet_modules_rpm_version: #{rpm_version}"
     }
     open("#{dist_dir}/#{module_name}.properties", "w") { |file|
       file.puts "module_name=#{module_name}"
-      file.puts "rpm_version=#{rpm_version}"
+      file.puts "puppet_modules_rpm_version=#{rpm_version}"
     }
   end
 end

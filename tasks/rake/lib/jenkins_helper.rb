@@ -51,7 +51,7 @@ class JenkinsHelper
 
   def call_jenkins_api(request_url)
     request = Net::HTTP::Get.new(request_url)
-    request.basic_auth @jenkins_username, @jenkins_token
+    request.basic_auth("#{@jenkins_username}", "#{@jenkins_token}")
     JSON.load(@jenkins_conn.request(request).body)
   end
 
@@ -83,6 +83,7 @@ class JenkinsHelper
     puts "Fetching artifact from " + artifact_url
 
     request = Net::HTTP::Get.new(artifact_url)
+    request.basic_auth("#{@jenkins_username}", "#{@jenkins_token}")
     open(destination_folder + '/' + destination_file, "wb") { |file|
       file.write(@jenkins_conn.request(request).body)
     }

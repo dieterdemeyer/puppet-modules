@@ -16,12 +16,21 @@ namespace "jenkins" do
     puts "Saving #{module_name}.yaml file"
     FileUtils.mkdir_p(dist_dir)
     open("#{dist_dir}/#{module_name}.yaml", "w") { |file|
-      file.puts "module_name: #{module_name}"
-      file.puts "puppet_modules_rpm_version: #{rpm_version}"
+      file.puts("module_name: #{module_name}")
+      file.puts("puppet_modules_rpm_version: #{rpm_version}")
     }
     open("#{dist_dir}/#{module_name}.properties", "w") { |file|
-      file.puts "module_name=#{module_name}"
-      file.puts "puppet_modules_rpm_version=#{rpm_version}"
+      file.puts("module_name=#{module_name}")
+      file.puts("puppet_modules_rpm_version=#{rpm_version}")
+    }
+
+    jenkins_helper = JenkinsHelper.new
+    module_dependencies = jenkins_helper.find_module_dependencies(module_name)
+    
+    dependencies_file = "puppet-modules-dependencies.yaml"
+    puts "Saving #{dependencies_file} file"
+    open("#{dist_dir}/#{dependencies_file}", "w") { |file|
+      file.puts(module_dependencies.to_yaml)
     }
   end
 end

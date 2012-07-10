@@ -59,7 +59,7 @@ class BasePackager
     module_dependencies.each { |dependent_module,dependent_version|
       dependent_package = "#{@package_prefix}-#{dependent_module}"
       dependency_arguments << "-d"
-      dependency_arguments << "#{dependent_package} <= #{dependent_version}"
+      dependency_arguments << "#{dependent_package} = #{dependent_version}"
     }
 		
     arguments = static_arguments + exclude_arguments + var_arguments + dependency_arguments

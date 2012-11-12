@@ -64,7 +64,7 @@ class JenkinsHelper
 
     module_dependencies = {}
     upstream_projects.each { |upstream_project|
-      artifact_location = upstream_project.split("-")[1..-1] + "/target/dist"
+      artifact_location = upstream_project.split("-")[1..-1].join + "/target/dist"
       jenkins_helper.fetch_artifact(upstream_project, artifact_location, upstream_project + ".yaml", artifacts_folder)
 
       module_properties_file = YAML.load(File.read("#{artifacts_folder}/#{upstream_project}.yaml"))
